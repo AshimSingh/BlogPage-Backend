@@ -1,0 +1,4 @@
+node_modules
+package.json
+config.env
+mocharc.js
