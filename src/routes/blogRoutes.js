@@ -13,7 +13,7 @@ router
   .route('/authenticated_user_blogs')
   .get(authenticate, blogController.getAllBlog)
 
-router.route('/comments/:slug').get(commentController.getAllComments)
+router.route('/comments/:room').get(commentController.getAllComments)
 
 router
   .route('/:slug')

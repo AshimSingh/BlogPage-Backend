@@ -30,6 +30,7 @@ app.use('/api/documentation', swaggerUi.serve, swaggerUi.setup(docs))
 app.use((err, req, res, next) => {
   errorHandler(err, req, res, next)
 })
+app.use('/healthy',(req,res)=>{res.status(200).json({message:'I am healthy bro.'})})
 
 // Middleware
 app.use(cors())

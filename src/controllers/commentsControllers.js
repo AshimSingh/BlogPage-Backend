@@ -13,17 +13,22 @@ const getAllComments = async (req, res, next) => {
   var search = req.query.search || req.params.slug
   var searchBy = req.query.searchby || 'blogId'
   let searchObj = {}
-  var blogSlug = req.params.slug
+  var roomId = req.params.room
   console.log(search, 'is here')
   if (search) {
     if (searchBy !== 'author' && searchBy !== 'blogId') {
       searchObj[searchBy] = new RegExp(search, 'i')
-    } else {
+    }
+     else {
       searchObj[searchBy] = search
     }
   }
+  if(roomId){
+    searchObj['blogId']= roomId
+  }
+  console.log(searchObj,'ashim my search obj')
   try {
-    const commentsData = await Comment.find()
+    const commentsData = await Comment.find(searchObj)
       .sort(sortObject)
       .skip(skip)
       .limit(limit)
@@ -31,7 +36,7 @@ const getAllComments = async (req, res, next) => {
         path: 'author',
         select: ['firstname', 'lastname', 'slug'],
       })
-      console.log(searchObj,commentsData,blogSlug)
+      console.log(searchObj,commentsData,roomId)
     if (commentsData) {
       return successResponse(res, 200, 'Comments', commentsData)
     } else {
